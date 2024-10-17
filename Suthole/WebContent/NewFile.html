@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kakao Map Pothole Markers</title>
+  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a53be837bc6a47b7d260cf498d638153&libraries=services"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
+    }
+    button {
+      display: block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    /* 사진을 띄우기 위한 모달 스타일 */
+    #modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    #modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+    #close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    #close:hover, #close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pothole Detector</h1>
+  <button onclick="updatePothole()">Pothole update</button>
+  <div id="map"></div>
+
+  <!-- 모달(사진 표시 영역) -->
+  <div id="modal">
+    <span id="close">&times;</span>
+    <img id="modal-content" src="">
+  </div>
+
+  <script>
+    var mapContainer = document.getElementById('map'),
+        mapOption = {
+          center: new kakao.maps.LatLng(37.209651, 126.979733), // 초기 지도 중심 좌표
+          level: 3 // 지도 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    var modal = document.getElementById("modal");
+    var modalImg = document.getElementById("modal-content");
+    var span = document.getElementById("close");
+
+    // 모달 닫기 기능
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // 마커를 업데이트하는 함수
+    function updatePothole() {
+      fetch('http://127.0.0.1:5000/get_files')
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(coord => {
+            var latitude = parseFloat(coord.latitude);
+            var longitude = parseFloat(coord.longitude);
+            var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+            var marker = new kakao.maps.Marker({
+              position: markerPosition
+            });
+
+            // 마커 클릭 이벤트 설정
+            kakao.maps.event.addListener(marker, 'click', function() {
+              var imageUrl = "http://127.0.0.1:5000/pothole_images/" + latitude + "," + longitude + ".jpg";
+              console.log("Image URL: ", imageUrl);  // 이미지 경로 로그로 확인
+              modalImg.src = imageUrl;
+              modal.style.display = "block";  // 모달을 띄움
+            });
+
+            marker.setMap(map);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Failed to update pothole markers.');
+        });
+    }
+  </script>
+</body>
+</html>

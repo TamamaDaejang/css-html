@@ -1,0 +1,95 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보 입력</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center; /* 페이지의 수평 중앙 정렬 */
+            align-items: center; /* 페이지의 수직 중앙 정렬 */
+            height: 100vh; /* 페이지 전체 높이 */
+            margin: 0;
+            background-color: #f5f5f5; /* 배경색 설정 */
+        }
+
+        .container {
+            text-align: left; /* 컨테이너 내 텍스트 왼쪽 정렬 */
+            background-color: #fff; /* 컨테이너 배경색 */
+            padding: 30px;
+            border-radius: 10px; /* 둥근 테두리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        }
+
+        .logo {
+            text-align: center; /* 로고 중앙 정렬 */
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 150px; /* 로고 크기 */
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px; /* 타이틀 아래 여백 */
+            text-align: right; /* 텍스트를 오른쪽으로 정렬 */
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center; /* 아이콘과 입력 필드를 수직 중앙 정렬 */
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* 패딩 포함한 전체 너비 설정 */
+            color: #aaa; /* 텍스트 색상 */
+        }
+
+        .form-group img {
+            width: 24px; /* 아이콘 크기 */
+            margin-right: 10px;
+            opacity: 0.5; /* 아이콘 투명도 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="coupang_logo.png" alt="Coupang Logo">
+        </div>
+        <div class="section-title">
+            회원정보를 입력해주세요
+        </div>
+        <div class="form-group">
+            <img src="icon-email.png" alt="아이디">
+            <input type="text" placeholder="아이디(이메일)">
+        </div>
+        <div class="form-group">
+            <img src="icon-password.png" alt="비밀번호">
+            <input type="password" placeholder="비밀번호">
+        </div>
+        <div class="form-group">
+            <img src="icon-password.png" alt="비밀번호 확인">
+            <input type="password" placeholder="비밀번호 확인">
+        </div>
+        <div class="form-group">
+            <img src="icon-user.png" alt="이름">
+            <input type="text" placeholder="이름">
+        </div>
+        <div class="form-group">
+            <img src="icon-phone.png" alt="휴대폰 번호">
+            <input type="text" placeholder="휴대폰 번호">
+        </div>
+    </div>
+</body>
+</html>

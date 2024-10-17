@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>카카오 지도 API 경로 찾기 예제</title>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_JAVASCRIPT_KEY"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74a77a16713ffd9783ba7670873e855"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+		
+
+		var map = new kakao.maps.Map(container, options);
+	</script>
+
+    <script>
+        const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울을 중심으로 설정
+                level: 7 // 지도의 확대 레벨
+            }; 
+
+        const map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+
+        // REST API 키
+        const REST_API_KEY = 'a24daf2bfe99fbef3e2963fc8d8abbdb';
+
+        // 출발지와 목적지 좌표 (서울역 -> 강남역)
+        const startX = 126.9706;  // 출발지 경도
+        const startY = 37.5565;   // 출발지 위도
+        const endX = 127.0276;    // 도착지 경도
+        const endY = 37.4979;     // 도착지 위도
+
+        // 자동차 경로 찾기 API 요청 URL
+        const url = `https://apis-navi.kakaomobility.com/v1/directions?origin=${startX},${startY}&destination=${endX},${endY}&priority=RECOMMEND`;
+
+        // API 요청
+        fetch(url, {
+          headers: {
+            Authorization: `KakaoAK ${REST_API_KEY}`
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const routeCoords = data.routes[0].sections[0].roads.map(road => road.vertexes);  // 경로 좌표 추출
+          const flatCoords = routeCoords.flat(); // 좌표 배열 평탄화
+
+          const coordPairs = [];
+          for (let i = 0; i < flatCoords.length; i += 2) {
+              coordPairs.push([flatCoords[i], flatCoords[i + 1]]);
+          }
+
+          drawRoute(coordPairs);  // 경로 그리기
+        })
+        .catch(error => {
+          console.error('Error fetching directions:', error);
+        });
+
+        // 폴리라인을 그리는 함수
+        function drawRoute(routeCoords) {
+          const linePath = routeCoords.map(coord => new kakao.maps.LatLng(coord[1], coord[0]));
+
+          const polyline = new kakao.maps.Polyline({
+              path: linePath,
+              strokeWeight: 5,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1.0,
+              strokeStyle: 'solid'
+          });
+
+          polyline.setMap(map); // 지도에 표시
+        }
+    </script>
+</body>
+</html>

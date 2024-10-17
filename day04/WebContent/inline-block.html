@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>인라인 블록 요소</title>
+</head>
+<body>
+<!--inlie, inline-block 요소를 사용할 떄에는 엔터도 공백으로 인식한다.  -->
+<!-- 만약 목적으로 요소 별 엔터를 삽입한다면, inline 요소인지 잘 확인해야 한다. -->
+	<div>
+		<div style="display:inline-block;background:red; text-align: center; width: 50%">div1</div><div style="display:inline-block;background: green; text-align: center; width: 50%">div2</div>
+
+	</div>
+	
+<!-- DIV3, 4, 5, 6, 총 4개의 태그를 생성하고, 한 줄로 이어서 나오게 하기 -->
+<!-- 		<div style="display:inline-block;background:red; text-align: center; width: 25%">div3</div><div style="display:inline-block;background: green; text-align: center; width: 25%">div4</div><div style="display:inline-block;background:red; text-align: center; width: 25%">div5</div><div style="display:inline-block;background: green; text-align: center; width: 25%">div6</div>
+ -->
+ 	<div>
+		 <div style="float: left;background:red; text-align: center; width: 25%">div3</div>
+		 <div style="float: left;background:yellow; text-align: center; width: 25%">div4</div>
+		 <div style="float: left;background:blue; text-align: center; width: 25%">div5</div>
+		 <div style="float: left;background:green; text-align: center; width: 25%">div6</div>
+	</div> 	
+ 	<div>
+ 		<div style="float:Left;background: yellow; text-align: center; width: 50%">div7</div>
+ 		<div style="float:Left;background: pink; text-align: center; width: 50%">div8</div>
+ 		
+ 		<ul style="list-style: none;">
+ 			<li style="froat:left">회사소개</li>
+ 			<li style="froat:left">최신상품</li>
+ 			<li style="froat:left">상품후기</li>
+ 		</ul>
+ 		
+ 		
+ 		
+ 		
+ 	</div>
+
+</body>
+</html>
